@@ -1,0 +1,10 @@
+executable = io_test.py
+
+output     = io_run$(Process).out
+error      = io_run$(Process).err
+log        = io.log
+
+request_cpus = 1
+request_memory = 512MB
+
+queue 3

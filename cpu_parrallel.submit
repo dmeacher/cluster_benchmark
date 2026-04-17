@@ -1,0 +1,11 @@
+executable = cpu_parallel.py
+
+output     = cpu_parallel_run$(Process).out
+error      = cpu_parallel_run$(Process).err
+log        = cpu_parallel.log
+
+request_cpus = 1
+request_memory = 512MB
+
+queue 6
+

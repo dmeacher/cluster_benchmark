@@ -1,0 +1,10 @@
+executable = cpu_single.py
+arguments  =
+output     = cpu_single_run$(Process).out
+error      = cpu_single_run$(Process).err
+log        = cpu_single.log
+
+request_cpus = 1
+request_memory = 512MB
+
+queue 3
