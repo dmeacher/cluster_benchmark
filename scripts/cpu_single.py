@@ -6,26 +6,28 @@ import platform
 def is_prime(n):
     if n < 2:
         return False
-    for i in range(2, int(math.sqrt(n)) + 1):
+    r = int(math.sqrt(n)) + 1
+    for i in range(2, r):
         if n % i == 0:
             return False
     return True
 
-start = time.time()
-count = 0
-limit = 50000
+START = 2
+END = 12_000_000
 
-for i in range(limit):
-    if is_prime(i):
+start_time = time.time()
+
+count = 0
+for n in range(START, END):
+    if is_prime(n):
         count += 1
 
-end = time.time()
+elapsed = time.time() - start_time
 
-result = {
+print(json.dumps({
     "benchmark": "cpu_single",
     "hostname": platform.node(),
+    "numbers_tested": END - START,
     "primes_found": count,
-    "time_seconds": round(end - start, 3)
-}
-
-print(json.dumps(result, indent=2))
+    "elapsed_seconds": round(elapsed, 2)
+}))

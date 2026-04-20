@@ -2,19 +2,27 @@ import time
 import json
 import platform
 
-size = 200_000_000  # ~1.6GB of int8
-start = time.time()
+SIZE = 1_048_676_000 # 1024 * 1024 * 1000
+STRIDE = 4096
+PASSES = 1000
 
-data = bytearray(size)
-for i in range(0, size, 4096):
-    data[i] = 1
+data = bytearray(SIZE)
 
-checksum = sum(data[i] for i in range(0, size, 4096))
-end = time.time()
+start_time = time.time()
+
+checksum = 0
+for _ in range(PASSES):
+    for i in range(0, SIZE, STRIDE):
+        data[i] = (data[i] + 1) % 256
+        checksum += data[i]
+
+elapsed = time.time() - start_time
 
 print(json.dumps({
     "benchmark": "memory",
     "hostname": platform.node(),
-    "time_seconds": round(end - start, 3),
-    "checksum": checksum
+    "bytes_touched": SIZE * PASSES,
+    "passes": PASSES,
+    "checksum": checksum,
+    "elapsed_seconds": round(elapsed, 2)
 }))

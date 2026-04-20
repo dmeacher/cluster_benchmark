@@ -3,21 +3,32 @@ import os
 import json
 import platform
 
-filename = "iotest.dat"
-size_mb = 512
+FILE_SIZE_MB = 1024
+ITERATIONS = 100
+
 block = b"x" * (1024 * 1024)
+filename = "iotest.dat"
 
-start = time.time()
-with open(filename, "wb") as f:
-    for _ in range(size_mb):
-        f.write(block)
-end = time.time()
+start_time = time.time()
 
-os.remove(filename)
+for _ in range(ITERATIONS):
+    with open(filename, "wb") as f:
+        for _ in range(FILE_SIZE_MB):
+            f.write(block)
+
+    with open(filename, "rb") as f:
+        while f.read(1024 * 1024):
+            pass
+
+    os.remove(filename)
+
+elapsed = time.time() - start_time
 
 print(json.dumps({
     "benchmark": "io",
     "hostname": platform.node(),
-    "mb_written": size_mb,
-    "time_seconds": round(end - start, 3)
+    "iterations": ITERATIONS,
+    "file_size_mb": FILE_SIZE_MB,
+    "total_mb_written": ITERATIONS * FILE_SIZE_MB,
+    "elapsed_seconds": round(elapsed, 2)
 }))
