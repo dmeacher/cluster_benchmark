@@ -9,7 +9,7 @@ import platform
 # CONFIGURATION (CALIBRATE ONCE)
 # =========================
 
-TOTAL_STEPS = 2_000_000        # adjust so slowest node takes ~30–60 min
+TOTAL_STEPS = 2_000_000_000
 CHECKPOINT_INTERVAL = 50_000   # save state every N steps
 ARRAY_SIZE = 120_000_000       # ~120 MB
 STATE_FILE = "stress_state.json"
