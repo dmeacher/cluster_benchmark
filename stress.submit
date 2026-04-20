@@ -1,0 +1,15 @@
+executable = stress_test.py
+
+output     = stress_$(Cluster)_$(Process).out
+error      = stress_$(Cluster)_$(Process).err
+log        = stress.log
+
+request_cpus   = 1
+request_memory = 1GB
+request_disk   = 2GB
+
++MaxRuntime = 43200         # 12 hours (safety)
+kill_sig = SIGTERM
+
+queue 4
+
